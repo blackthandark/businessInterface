@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: dev
+
+qiniu:
+  accessKey:  WXhIUPvw7NDPzARNo5a2zNMzg2EakC_dx5MAJYWq
+  secretKey:  X918sxCOfJzhTTUrlYWBfeHFIxOAWp0kBPn-_zAo
+  bucket: business
+
+#######redis配置#######
+redis:
+  max:
+    total:  20
+    idle: 10
+  min:
+    idle: 2
+  ip:
+  port: 5379
+  test:
+    borrow: true
+    return: true
+  password: ddm201606
+

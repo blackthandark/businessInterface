@@ -1,0 +1,51 @@
+server:
+  port: 8888
+
+
+image:
+  imageHost:  http://pwkbzuvm9.bkt.clouddn.com
+
+jdbc:
+  driver: com.mysql.jdbc.Driver
+  url:  jdbc:mysql://localhost:3306/shopping?characterEncoding=utf8&serverTimezone=Asia/Shanghai
+  username: root
+  password: "@Ddm201606"
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/shopping?characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      username: root
+      password: "@Ddm201606"
+      max-active: 20
+      max-wait: 6000
+      min-idle: 1
+      test-on-borrow: true
+      test-on-return: true
+mybatis:
+  mapper-locations: classpath*:com/neuedu/mapper/*Mapper.xml
+  config-location: classpath:MyBatisConfig.xml
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: countSql
+
+ftp:
+  server:
+    ip: 116.62.49.63
+    user: ftpuser
+    password: 13579
+
+qrimage:
+  filepath: "/qrimage/qr-%s.png"
+
+notifyurl:   http://116.62.49.63:8888/order/alipay_callback.do
+
+
+order:
+  close:
+    timeout: 1
