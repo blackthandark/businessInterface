@@ -12,4 +12,6 @@ public interface IProductService {
     public ServerResponse detail_portal(Integer productId);
 
     public ServerResponse topcategory(Integer sid);
+
+    public ServerResponse gethot();
 }

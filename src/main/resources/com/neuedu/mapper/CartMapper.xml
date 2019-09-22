@@ -69,6 +69,7 @@
     select id, user_id, product_id, quantity, checked, create_time, update_time
     from neuedu_cart
     where id = #{id,jdbcType=INTEGER}
+    order by update_time DESC
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     <!--
@@ -77,16 +78,19 @@
     -->
     select id, user_id, product_id, quantity, checked, create_time, update_time
     from neuedu_cart
+    order by update_time DESC
   </select>
 
   <select id="selectCartByUserIdAndProductId" parameterType="map" resultMap="BaseResultMap">
     select id, user_id, product_id, quantity, checked, create_time, update_time
     from neuedu_cart where user_id=#{userId} and product_id=#{productId}
+    order by update_time DESC
   </select>
 
   <select id="selectCartByUserId" parameterType="int" resultMap="BaseResultMap">
     select id, user_id, product_id, quantity, checked, create_time, update_time
     from neuedu_cart where user_id=#{userId}
+    order by update_time DESC
   </select>
 
   <select id="isCheckedAll" parameterType="int" resultType="int">
@@ -126,5 +130,6 @@
   <select id="findCartListByUserIdChecked" parameterType="int" resultMap="BaseResultMap">
     select id, user_id, product_id, quantity, checked, create_time, update_time
     from neuedu_cart where user_id=#{userId} and checked=1
+    order by update_time DESC
   </select>
 </mapper>

@@ -21,7 +21,7 @@ public class OrderVO implements Serializable{
     private String imageHost;
     private Integer shippingId;
     private String receiverName;
-    private ShippingVO shippingVo;
+    private ShippingVO shippingVO;
 
     public Long getOrderNo() {
         return orderNo;
@@ -151,11 +151,11 @@ public class OrderVO implements Serializable{
         this.receiverName = receiverName;
     }
 
-    public ShippingVO getShippingVo() {
-        return shippingVo;
+    public ShippingVO getShippingVO() {
+        return shippingVO;
     }
 
-    public void setShippingVo(ShippingVO shippingVo) {
-        this.shippingVo = shippingVo;
+    public void setShippingVO(ShippingVO shippingVO) {
+        this.shippingVO = shippingVO;
     }
 }

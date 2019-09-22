@@ -75,11 +75,15 @@ public class ProductServiceImpl implements IProductService{
 
         List<Product> productList=productMapper.searchProduct(integerSet,keyword);
         List<ProductListVO> productListVOList=Lists.newArrayList();
+        int i=0;
         if(productList!=null&&productList.size()>0){
             for(Product product:productList){
-                if(product.getStatus()==Const.ProductStatus.PRODUCT_ONLINE.getCode()){
+                /*if(product.getStatus()==Const.ProductStatus.PRODUCT_ONLINE.getCode()){*/
                 ProductListVO productListVO=assembleProductListVO(product);
-                productListVOList.add(productListVO);}
+                page.set(i,productListVO);
+                productListVOList.add(productListVO);
+                i++;
+               /* }*/
             }
         }
 
@@ -129,6 +133,15 @@ public class ProductServiceImpl implements IProductService{
         return ServerResponse.createServerResponseBySuccess(productCategoryVOList);
     }
 
+    @Override
+    public ServerResponse gethot() {
+        List<Product> productList=productMapper.searchHot();
+        if(productList==null||productList.size()<=0){
+            return ServerResponse.createServerResponseByFail(100,"暂无热销商品信息");
+        }
+        return ServerResponse.createServerResponseBySuccess(productList);
+    }
+
     private ProductListVO assembleProductListVO(Product product){
         ProductListVO productListVO=new ProductListVO();
         productListVO.setId(product.getId());
@@ -152,13 +165,21 @@ public class ProductServiceImpl implements IProductService{
         productDetailVO.setPrice(product.getPrice());
         productDetailVO.setStatus(product.getStatus());
         productDetailVO.setStock(product.getStock());
+        if(product.getSubImages()!=null||!"".equals(product.getSubImages())){
+            String[] subimageArr=product.getSubImages().split(",");
+            if(subimageArr!=null||subimageArr.length>0){
+                productDetailVO.setSubImageArr(subimageArr);
+            }
+        }
+
+
         productDetailVO.setSubImages(product.getSubImages());
         productDetailVO.setSubtitle(product.getSubtitle());
         productDetailVO.setUpdateTime(DateUtils.dateToStr(product.getUpdateTime()));
         productDetailVO.setImageHost(imageHost);
-        productDetailVO.setIs_banner(0);
-        productDetailVO.setIs_hot(0);
-        productDetailVO.setIs_new(0);
+        productDetailVO.setIs_banner(product.getIsbanner());
+        productDetailVO.setIs_hot(product.getIshot());
+        productDetailVO.setIs_new(product.getIsnew());
         return productDetailVO;
     }
     private ProductCategoryVO assembleProductCategoryVO(Category category){

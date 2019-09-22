@@ -9,15 +9,16 @@ qiniu:
 
 #######redis配置#######
 redis:
+  ip: 116.62.49.63
+  port: 6379
+  password: ddm201606
   max:
     total:  20
     idle: 10
   min:
     idle: 2
-  ip:
-  port: 5379
   test:
     borrow: true
     return: true
-  password: ddm201606
+
 

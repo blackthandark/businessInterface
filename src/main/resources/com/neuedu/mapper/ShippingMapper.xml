@@ -79,6 +79,7 @@
     select id, user_id, receiver_name, receiver_phone, receiver_mobile, receiver_province, 
     receiver_city, receiver_district, receiver_address, receiver_zip, create_time, update_time
     from neuedu_shipping
+    order by update_time DESC
   </select>
   
   <delete id="deleteByUserIdAndShippingId" parameterType="map">
@@ -131,5 +132,6 @@
     receiver_city, receiver_district, receiver_address, receiver_zip, create_time, update_time
     from neuedu_shipping
     where user_id=#{userId}
+    order by update_time DESC
   </select>
 </mapper>

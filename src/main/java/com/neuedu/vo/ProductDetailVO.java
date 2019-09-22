@@ -15,12 +15,21 @@ public class ProductDetailVO implements Serializable{
     private  String subtitle;
     private String mainImage;
     private String subImages;
+    private String[] subImageArr;
     private String detail;
     private BigDecimal price;
     private Integer stock;
     private Integer status;
     private String createTime;
     private String updateTime;
+
+    public String[] getSubImageArr() {
+        return subImageArr;
+    }
+
+    public void setSubImageArr(String[] subImageArr) {
+        this.subImageArr = subImageArr;
+    }
 
     public String getImageHost() {
         return imageHost;

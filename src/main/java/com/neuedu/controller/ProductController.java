@@ -3,10 +3,11 @@ package com.neuedu.controller;
 import com.neuedu.common.ServerResponse;
 import com.neuedu.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/product/")
 public class ProductController {
@@ -30,4 +31,10 @@ public class ProductController {
     public ServerResponse topcategory(@RequestParam(name="sid",required = false,defaultValue = "0")Integer sid){
         return productService.topcategory(sid);
     }
+    @RequestMapping("gethot.do")
+    public ServerResponse gethot(){
+
+        return productService.gethot();
+    }
+
 }

@@ -60,4 +60,6 @@ public interface ProductMapper {
     * */
     List<Product> searchProduct(@Param("integerSet") Set<Integer> integerSet,
                                 @Param("keyword") String keyword);
+
+    List<Product> searchHot();
 }

@@ -13,7 +13,7 @@ public interface IOrderService {
 
     public ServerResponse get_order_cart_product(Integer userId);
 
-    public ServerResponse list(Integer userId,Integer pageNum,Integer pageSize);
+    public ServerResponse list(Integer userId,Integer pageNum,Integer pageSize,Integer status);
 
     public ServerResponse detail(Long orderNo);
 
@@ -27,4 +27,6 @@ public interface IOrderService {
     public ServerResponse query_order_pay_status(Integer userId,Long orderNo);
 
     public List<Order> closeOrder(String closeOrderDate);
+
+    ServerResponse listall(Integer userId, Integer status);
 }

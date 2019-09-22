@@ -57,4 +57,6 @@ public interface CategoryMapper {
 
     //查询子类别（平级）
     List<Category> selectChildCategory(Integer categoryId);
+
+    List<Category> selectTopCategory();
 }

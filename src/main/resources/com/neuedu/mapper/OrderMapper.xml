@@ -83,6 +83,7 @@
     select id, user_id, order_no, shipping_id, payment, payment_type, postage, status, 
     payment_time, send_time, end_time, close_time, create_time, update_time
     from neuedu_order
+    order by update_time DESC
   </select>
 
   <select id="findOrderByUserIdAndOrderNo" parameterType="map" resultMap="BaseResultMap">
@@ -95,6 +96,7 @@
     select id, user_id, order_no, shipping_id, payment, payment_type, postage, status,
     payment_time, send_time, end_time, close_time, create_time, update_time
     from neuedu_order where user_id=#{userId}
+    order by update_time DESC
   </select>
 
   <select id="findOrderByOrderNo" parameterType="long" resultMap="BaseResultMap">
@@ -120,4 +122,11 @@
     update_time=now()
     where id=#{id}
   </update>
+
+  <select id="findOrderByUserIdAndStatus" parameterType="map" resultMap="BaseResultMap">
+    select id, user_id, order_no, shipping_id, payment, payment_type, postage, status,
+    payment_time, send_time, end_time, close_time, create_time, update_time
+    from neuedu_order where user_id=#{userId} and status=#{status}
+    order by update_time DESC
+  </select>
 </mapper>

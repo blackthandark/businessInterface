@@ -79,7 +79,7 @@ public class OrderServiceImpl implements IOrderService{
     @Value("${notifyurl}")
     private String notifyurl;
     @Override
-    @Transactional(rollbackFor = MyException.class)
+    @Transactional
     public ServerResponse create(Integer userId, Integer shippingId) {
         //参数非空校验
         if(shippingId==null){
@@ -175,23 +175,30 @@ public class OrderServiceImpl implements IOrderService{
     }
 
     @Override
-    public ServerResponse list(Integer userId, Integer pageNum, Integer pageSize) {
+    public ServerResponse list(Integer userId, Integer pageNum, Integer pageSize,Integer status) {
 
         Page page=PageHelper.startPage(pageNum,pageSize);
         List<Order> orderList=Lists.newArrayList();
         if(userId==null){
             orderList=orderMapper.selectAll();
         }else{
-            orderList=orderMapper.findOrderByUserId(userId);
+            if(status==-10){
+                orderList=orderMapper.findOrderByUserId(userId);
+            }else{
+                orderList=orderMapper.findOrderByUserIdAndStatus(userId, status);
+            }
         }
         if(orderList==null||orderList.size()==0){
             return ServerResponse.createServerResponseByFail(5,"未查询到订单信息");
         }
         List<OrderVO> orderVOList=Lists.newArrayList();
+        int i=0;
         for(Order order:orderList){
             List<OrderItem> orderItemList=orderItemMapper.findOrderItemByOrderNo(order.getOrderNo());
             OrderVO orderVO=assembleOrderVO(order,orderItemList,order.getShippingId());
+            page.set(i,orderVO);
             orderVOList.add(orderVO);
+            i++;
         }
         PageInfo pageInfo=new PageInfo(page);
         return ServerResponse.createServerResponseBySuccess(pageInfo);
@@ -230,7 +237,7 @@ public class OrderServiceImpl implements IOrderService{
         if(shipping!=null){
             orderVO.setShippingId(shippingId);
             ShippingVO shippingVO=assembleShippingVO(shipping);
-            orderVO.setShippingVo(shippingVO);
+            orderVO.setShippingVO(shippingVO);
             orderVO.setReceiverName(shipping.getReceiverName());
         }
         orderVO.setStatus(order.getStatus());
@@ -501,6 +508,30 @@ public class OrderServiceImpl implements IOrderService{
 
 
         return null;
+    }
+
+    @Override
+    public ServerResponse listall(Integer userId, Integer status) {
+        List<Order> orderList=Lists.newArrayList();
+        if(userId==null){
+            orderList=orderMapper.selectAll();
+        }else{
+            if(status==-10){
+                orderList=orderMapper.findOrderByUserId(userId);
+            }else{
+                orderList=orderMapper.findOrderByUserIdAndStatus(userId, status);
+            }
+        }
+        if(orderList==null||orderList.size()==0){
+            return ServerResponse.createServerResponseByFail(5,"未查询到订单信息");
+        }
+        List<OrderVO> orderVOList=Lists.newArrayList();
+        for(Order order:orderList){
+            List<OrderItem> orderItemList=orderItemMapper.findOrderItemByOrderNo(order.getOrderNo());
+            OrderVO orderVO=assembleOrderVO(order,orderItemList,order.getShippingId());
+            orderVOList.add(orderVO);
+        }
+        return ServerResponse.createServerResponseBySuccess(orderVOList);
     }
 
     //////////////////////////支付相关////////////////////////////////////

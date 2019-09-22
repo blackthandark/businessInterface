@@ -51,6 +51,15 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createServerResponseBySuccess(integerSet);
     }
 
+    @Override
+    public ServerResponse get_topcategory() {
+        List<Category> categoryList=categoryMapper.selectTopCategory();
+        if(categoryList==null||categoryList.size()<=0){
+            return ServerResponse.createServerResponseByFail(100,"类别为空");
+        }
+        return ServerResponse.createServerResponseBySuccess(categoryList);
+    }
+
     private Set<Category> findAllChildCategory(Set<Category> categorySet,Integer categoryId){
         Category category=categoryMapper.selectByPrimaryKey(categoryId);
         if(category!=null){

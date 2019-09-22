@@ -9,6 +9,7 @@ import com.neuedu.consts.Const;
 import com.neuedu.pojo.UserInfo;
 import com.neuedu.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Iterator;
 import java.util.Map;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/order/")
 public class OrderController {
@@ -63,10 +64,18 @@ public class OrderController {
     @RequestMapping("list.do")
     public ServerResponse list(@RequestParam(name="pageNum",required = false,defaultValue = "1")Integer pageNum,
                                @RequestParam(name="pageSize",required = false,defaultValue = "10")Integer pageSize,
+                               @RequestParam(name="status",required = false,defaultValue = "-10")Integer status,
                                HttpSession session){
         UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
 
-        return orderService.list(userInfo.getId(),pageNum,pageSize);
+        return orderService.list(userInfo.getId(),pageNum,pageSize,status);
+    }
+    @RequestMapping("listall.do")
+    public ServerResponse listall(@RequestParam(name="status",required = false,defaultValue = "-10")Integer status,
+                               HttpSession session){
+        UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+
+        return orderService.listall(userInfo.getId(),status);
     }
 
     /*
